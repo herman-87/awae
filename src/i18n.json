@@ -1,0 +1,14 @@
+{
+  "en": {
+    "civility": {
+      "mister": "mr",
+      "madam": "mme"
+    }
+  },
+  "fr": {
+    "civility": {
+      "mister": "Mr",
+      "madam": "Mme"
+    }
+  }
+}

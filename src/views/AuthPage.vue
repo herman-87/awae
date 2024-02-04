@@ -4,9 +4,9 @@
       <span>{{ t('doSignup') }}</span>
       <span class="text-blue-500 underline underline-offset-8">{{ t('signup') }}</span>
     </div>
-    <div class="flex flex-col gap-0.5 items-center p-4">
+    <div class="flex flex-col gap-0.5 items-center p-4 text-lg">
       <div>
-        <span class="text-xs font-medium">{{ t("sayWelcome") }}</span>
+        <span class="font-medium">{{ t("sayWelcome") }}</span>
         <strong class="text-blue-500">AWAE</strong>
       </div>
       <span class="text-[13px]">{{ t('doSignin') }}</span>
