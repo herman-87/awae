@@ -6,7 +6,7 @@
         v-model="model"
         :type="getInputType"
         :placeholder="placeholder"
-        class="w-full rounded lg:rounded-lg p-2 lg:py-4 px-2 outline-none border border-gray-300 focus:border-none focus:outline-blue-400"
+        class="w-full rounded lg:rounded-lg p-2 lg:py-4 outline-none border border-gray-300 focus:border-none focus:outline-blue-400"
       />
       <div
         @click="isShowPasswordButtonHasBeenClicked = !isShowPasswordButtonHasBeenClicked"
