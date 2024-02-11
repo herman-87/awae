@@ -6,10 +6,14 @@
         v-model="model"
         :type="getInputType"
         :placeholder="placeholder"
+        :data-test="`${label.toLowerCase()}Field`"
         class="w-full rounded lg:rounded-lg p-2 lg:py-4 outline-none border border-gray-300 focus:border-none focus:outline-blue-400"
       />
       <div
-        @click="isShowPasswordButtonHasBeenClicked = !isShowPasswordButtonHasBeenClicked"
+        @click="
+          isShowPasswordButtonHasBeenClicked =
+            !isShowPasswordButtonHasBeenClicked
+        "
         class="absolute top-2.5 lg:top-5 right-0 lg:right-1 h-full w-6 cursor-pointer"
       >
         <ShowIcon v-if="isShowPasswordButtonHasBeenClicked" />
@@ -20,19 +24,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import ShowIcon from '@/components/svg/ShowPassword.vue'
-import HideIcon from '@/components/svg/HidePassword.vue'
+import { ref, computed } from "vue";
+import ShowIcon from "@/components/svg/ShowPassword.vue";
+import HideIcon from "@/components/svg/HidePassword.vue";
 
-const model = defineModel()
+const model = defineModel();
 
 defineProps<{
-  label: string
-  placeholder: string
-}>()
+  label: string;
+  placeholder: string;
+}>();
 
-const isShowPasswordButtonHasBeenClicked = ref()
+const isShowPasswordButtonHasBeenClicked = ref();
 const getInputType = computed<string>(() => {
-  return isShowPasswordButtonHasBeenClicked.value ? 'password' : 'text'
-})
+  return isShowPasswordButtonHasBeenClicked.value ? "password" : "text";
+});
 </script>

@@ -3,6 +3,7 @@
     <label :for="label">{{ label }}</label>
     <input
       class="rounded lg:rounded-lg p-2 lg:py-4 outline-none border border-gray-300 focus:border-none focus:outline-blue-400"
+      :data-test="`${label.toLowerCase()}Field`"
       type="text"
       v-model="model"
       :placeholder="placeholder"
@@ -11,10 +12,10 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel();
 
 defineProps<{
-  label: string
-  placeholder: string
-}>()
+  label: string;
+  placeholder: string;
+}>();
 </script>
