@@ -32,10 +32,6 @@ export class User {
     return this.toString(this.user.dateOfBirth);
   }
 
-  get isActive(): boolean {
-    return this.user.isActivated || false;
-  }
-
   getTextFor(label: TABLE_ROW): string {
     switch (label) {
       case TABLE_ROW.EMAIL:
@@ -46,8 +42,6 @@ export class User {
         return this.lastname;
       case TABLE_ROW.DATE_OF_BIRTH:
         return this.dateOfBirth;
-      case TABLE_ROW.ACCOUNT_STATUS:
-        return this.isActive ? "active" : "inactive";
       default:
         return "-";
     }

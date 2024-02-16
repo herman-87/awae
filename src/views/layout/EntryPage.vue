@@ -1,7 +1,5 @@
 <template>
-  <main
-    class="min-h-screen box-border flex flex-col bg-gradient-to-bl from-white from-45% to-fuchsia-100 to-90%"
-  >
+  <main class="min-h-screen box-border flex flex-col bg-gray-100/40">
     <nav
       ref="navBar"
       class="bg-white flex items-center justify-between p-4 border-b border-gray-100"
@@ -53,8 +51,8 @@ const initials = "AD";
 const navBar = ref<HTMLElement | undefined>(undefined);
 const height = ref<string | undefined>(undefined);
 onMounted(() => {
-  height.value = navBar.value?.getBoundingClientRect().height+"px"
-})
+  height.value = navBar.value?.getBoundingClientRect().height + "px";
+});
 </script>
 
 <style scoped>
