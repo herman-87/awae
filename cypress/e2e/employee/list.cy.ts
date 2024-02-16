@@ -1,4 +1,4 @@
-import { users } from "../../utils"
+import { users } from "../../utils";
 
 describe("Employees list", () => {
   it("should render correctly", () => {
@@ -15,6 +15,19 @@ describe("Employees list", () => {
         body: users,
       },
     );
+
+    cy.intercept(
+      {
+        url: "http://localhost:8080/api/leavemanager/v1/employee/1",
+        method: "GET",
+      },
+      {
+        statusCode: 200,
+        body: users[0],
+      },
+    );
+
     cy.get("[data-test='Sign In']").last().click();
+    cy.get("[data-test='user-1']").should("be.visible").click();
   });
 });
