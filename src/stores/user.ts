@@ -54,7 +54,7 @@ export const useUserStore = defineStore("user", () => {
     return NullableUser();
   };
 
-  const updateEmployee = async (user: User): Promise<number | undefined> => {
+  const updateUser = async (user: User): Promise<number | undefined> => {
     try {
       return EmployeeService.updateEmployee({
         employeeId: +user.id,
@@ -81,10 +81,10 @@ export const useUserStore = defineStore("user", () => {
   };
 
   return {
+    updateUser,
     createAdmin,
     deleteEmployee,
     createEmployee,
-    updateEmployee,
     getAllEmployees,
     getEmployeeById,
   };

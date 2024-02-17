@@ -16,6 +16,10 @@ export class User {
     return this.toString(this.user.id);
   }
 
+  set id(id: number) {
+    this.user.id = id;
+  }
+
   get email(): string {
     return this.toString(this.user.email);
   }

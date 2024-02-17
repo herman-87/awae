@@ -1,13 +1,26 @@
 <template>
   <main class="space-y-4 p-4">
-    <div class="py-4 text-lg space-x-2">
-      <RouterLink to="/users">
-        <span class="font-bold">users</span>
-      </RouterLink>
-      <span>-</span>
-      <span class="text-gray-600">{{ user?.lastname }}</span>
-    </div>
-    <section class="bg-white rounded-xl p-8 flex justify-between">
+    <EditUser
+      :user="user"
+      v-if="shouldEditUser"
+      @refresh="fetchUserDetails"
+      @close="shouldEditUser = false"
+    />
+    <section class="flex justify-between items-center">
+      <div class="py-4 text-lg space-x-2">
+        <RouterLink to="/users">
+          <span class="font-bold">users</span>
+        </RouterLink>
+        <span>-</span>
+        <span class="text-gray-600">{{ user?.lastname }}</span>
+      </div>
+      <TwButton
+        :cta="t('edit')"
+        :theme="THEME.BLUE"
+        @click="shouldEditUser = true"
+      />
+    </section>
+    <section class="space-y-4 bg-white rounded-xl p-8 flex justify-between">
       <section class="flex flex-col gap-y-7">
         <DetailItem :label="t('email')" :value="user?.email" />
         <DetailItem :label="t('first_name')" :value="user?.firstname" />
@@ -27,19 +40,29 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { THEME } from "@/utils/enum";
 import { onBeforeMount, ref } from "vue";
 import type { User } from "@/domain/user";
 import { useUserStore } from "@/stores/user";
+import EditUser from "@/components/EditUser.vue";
 import DetailItem from "@/components/DetailItem.vue";
 import UserIcon from "@/components/svg/UserIcon.vue";
+import TwButton from "@/components/TwButton.vue";
 
 const props = defineProps<{
   userId: string;
 }>();
 
 const user = ref<User>();
-onBeforeMount(async () => {
+const shouldEditUser = ref<boolean>(false);
+
+const fetchUserDetails = async (): Promise<void> => {
+  shouldEditUser.value = false;
   user.value = await useUserStore().getEmployeeById(+props.userId);
+};
+
+onBeforeMount(async () => {
+  await fetchUserDetails();
 });
 
 const { t } = useI18n({
@@ -49,12 +72,14 @@ const { t } = useI18n({
       first_name: "First name",
       last_name: "Last name",
       date_of_birth: "Date of birth",
+      edit: "Edit",
     },
     fr: {
       email: "E-mail",
       first_name: "Prénom",
       last_name: "Nom",
       date_of_birth: "Date de naissance",
+      edit: "Editer",
     },
   },
 });

@@ -7,14 +7,14 @@
         :type="getInputType"
         :placeholder="placeholder"
         :data-test="`${label.toLowerCase()}Field`"
-        class="w-full rounded lg:rounded-lg p-2 lg:py-4 outline-none border border-gray-300 focus:border-none focus:outline-blue-400"
+        class="w-full rounded lg:rounded-lg p-2 lg:py-2.5 outline-none border border-gray-300 focus:border-2 focus:border-blue-400"
       />
       <div
         @click="
           isShowPasswordButtonHasBeenClicked =
             !isShowPasswordButtonHasBeenClicked
         "
-        class="absolute top-2.5 lg:top-5 right-0 lg:right-1 h-full w-6 cursor-pointer"
+        class="absolute top-2.5 lg:top-3.5 right-0 lg:right-1 h-full w-6 cursor-pointer"
       >
         <ShowIcon v-if="isShowPasswordButtonHasBeenClicked" />
         <HideIcon v-else />
