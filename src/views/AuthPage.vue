@@ -4,9 +4,9 @@
       class="text-xs font-bold flex justify-end gap-2 p-4 border-b border-gray-200"
     >
       <span>{{ t("doSignup") }}</span>
-      <span class="text-blue-500 underline underline-offset-8">{{
-        t("signup")
-      }}</span>
+      <span class="text-blue-500 underline underline-offset-8">
+        {{ t("signup") }}
+      </span>
     </div>
     <div class="flex flex-col gap-0.5 items-center p-4 text-lg">
       <div>
@@ -35,10 +35,10 @@
     <section class="p-4 bg-gray-50">
       <section class="w-1/2 m-auto space-y-10 pt-10">
         <h1 class="flex flex-col items-center gap-2">
-          <span class="font-bold text-2xl"
-            >{{ t("sayWelcome")
-            }}<strong class="text-blue-500">AWAE</strong></span
-          >
+          <span class="font-bold text-2xl">
+            {{ t("sayWelcome") }}
+            <strong class="text-blue-500">AWAE</strong>
+          </span>
           <span class="text-base">{{ t("doSignin") }}</span>
         </h1>
         <div class="flex flex-col gap-5">
@@ -109,7 +109,6 @@ const v$ = useVuelidate(rules, state, { $externalResults });
 const router = useRouter();
 const performAuthentication = async (): Promise<void> => {
   const isFormReady = await v$.value.$validate();
-  // isFormReady && console.log('data', state)
   if (isFormReady) {
     console.log("data ->", state);
     await router.push("/users");
@@ -119,7 +118,7 @@ const performAuthentication = async (): Promise<void> => {
 const { t } = useI18n({
   messages: {
     en: {
-      email: "E-mail",
+      email: "Email",
       password: "Password",
       doSignup: "Don't have an account ?",
       doSignin: "Sign in to your account",
@@ -128,7 +127,7 @@ const { t } = useI18n({
       sayWelcome: "Welcome back to ",
     },
     fr: {
-      email: "E-mail",
+      email: "Email",
       password: "Mot de passe",
       doSignup: "Vous n'avez pas de compte ?",
       doSignin: "Connectez-vous à votre compte",

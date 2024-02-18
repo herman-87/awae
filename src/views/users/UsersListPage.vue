@@ -1,6 +1,18 @@
 <template>
-  <section class="p-4">
-    <section></section>
+  <section class="p-4 space-y-7">
+    <AddUser
+      @refresh="fetchAllUsers"
+      v-if="shouldDisplayAddUserModal"
+      @close="shouldDisplayAddUserModal = false"
+    />
+    <section class="flex justify-between items-center">
+      <h2 class="font-bold text-xl">{{ t("users") }}</h2>
+      <TwButton
+        :cta="t('addUser')"
+        :theme="THEME.BLUE"
+        @click="shouldDisplayAddUserModal = true"
+      />
+    </section>
     <section class="bg-white p-4 border rounded-md">
       <table class="w-full flex flex-col">
         <thead>
@@ -30,13 +42,18 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { TABLE_ROW } from "@/utils/enum";
-import type { User } from "@/domain/user";
-import { onBeforeMount, reactive } from "vue";
-import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
+import type { User } from "@/domain/user";
+import { useUserStore } from "@/stores/user";
+import AddUser from "@/components/AddUser.vue";
+import { TABLE_ROW, THEME } from "@/utils/enum";
+import TwButton from "@/components/TwButton.vue";
+import { onBeforeMount, reactive, ref } from "vue";
 
 const userStore = useUserStore();
+const columns = Object.keys(TABLE_ROW);
+
+const shouldDisplayAddUserModal = ref<boolean>(false);
 
 const router = useRouter();
 const goToUserDetailsPage = async (userId: string): Promise<void> => {
@@ -51,25 +68,32 @@ const state = reactive<State>({
   rows: [],
 });
 
-onBeforeMount(async () => {
+const fetchAllUsers = async (): Promise<void> => {
+  shouldDisplayAddUserModal.value = false;
   state.rows = await userStore.getAllEmployees();
-});
+};
 
-const columns = Object.keys(TABLE_ROW);
+onBeforeMount(async () => {
+  await fetchAllUsers();
+});
 
 const { t } = useI18n({
   messages: {
     en: {
-      email: "E-mail",
+      email: "Email",
       first_name: "First name",
       last_name: "Last name",
       date_of_birth: "Date of birth",
+      addUser: "+ Add",
+      users: "List of admins",
     },
     fr: {
-      email: "E-mail",
+      email: "Email",
       first_name: "Prénom",
       last_name: "Nom",
       date_of_birth: "Date de naissance",
+      addUser: "+ Ajouter",
+      users: "Liste des administrateurs",
     },
   },
 });

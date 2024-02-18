@@ -31,8 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                type: integer
-                format: int64
+                $ref: '#/components/schemas/RegistrationResponseDTO'
   /admin/add:
     post:
       tags:
@@ -150,7 +149,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegistrationDTO'
+              $ref: '#/components/schemas/EmployeeDTO'
       responses:
         201:
           description: successful operation
@@ -174,6 +173,321 @@ paths:
       responses:
         204:
           description: successful operation
+  /holiday:
+    post:
+      tags:
+        - Holiday
+      summary: Create a Holiday in the app
+      description: create a Holiday
+      operationId: createHoliday
+      security:
+        - oAuth:
+            - SUPER_ADMIN,ADMIN,EMPLOYEE
+      requestBody:
+        description: object that need to be use for create Holiday
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreationHolidayDTO'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+  /holiday/all:
+    get:
+      tags:
+        - Holiday
+      summary: get all Holidays
+      description: get all Holidays present in the app
+      operationId: getAllHolidays
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HolidayDTO'
+  /holiday/{holidayId}:
+    get:
+      tags:
+        - Holiday
+      summary: Get Holiday by id
+      description: Get Holiday by id. only the super admin or admin and the user account
+      operationId: getHolidayById
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      parameters:
+        - name: holidayId
+          in: path
+          description: holiday ID to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidayDTO'
+    put:
+      tags:
+        - Holiday
+      summary: update a Holiday
+      description: update a Holiday
+      operationId: updateHoliday
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayId
+          in: path
+          description: employee ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Holiday object that need to be update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidayDTO'
+      responses:
+        201:
+          description: successful operation
+    delete:
+      tags:
+        - Holiday
+      summary: Delete holiday by id
+      description: Delete holiday by id
+      operationId: deleteHolidayById
+      security:
+        - oAuth:
+            - SUPER_ADMIN,ADMIN
+      parameters:
+        - name: holidayId
+          in: path
+          description: The id of the holiday to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: successful operation
+  /approve/{holidayId}:
+    put:
+      tags:
+        - Holiday
+      summary: approve a Holiday
+      description: approve a Holiday
+      operationId: approveHoliday
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayId
+          in: path
+          description: holiday ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: successful operation
+  /unapproved/{holidayId}:
+    put:
+      tags:
+        - Holiday
+      summary: unapproved a Holiday
+      description: unapproved a Holiday
+      operationId: unapprovedHoliday
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayId
+          in: path
+          description: holiday ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: successful operation
+  /publish/{holidayId}:
+    put:
+      tags:
+        - Holiday
+      summary: publish a Holiday
+      description: publish a Holiday
+      operationId: publishHoliday
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayId
+          in: path
+          description: holiday ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: successful operation
+  /unpublished/{holidayId}:
+    put:
+      tags:
+        - Holiday
+      summary: unpublished a Holiday
+      description: unpublished a Holiday
+      operationId: unpublishedHoliday
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayId
+          in: path
+          description: holiday ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: successful operation
+  /holiday/type:
+    post:
+      tags:
+        - Holiday
+      summary: Create a HolidayType in the app
+      description: create a HolidayType
+      operationId: createHolidayType
+      security:
+        - oAuth:
+            - SUPER_ADMIN,ADMIN,EMPLOYEE
+      requestBody:
+        description: object that need to be use for create Holiday
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidayTypeDTO'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+    get:
+      tags:
+        - Holiday
+      summary: get all HolidayType
+      description: get all HolidayType present in the app
+      operationId: getAllHolidayTypes
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HolidayTypeDTO'
+  /holiday/type/{holidayTypeId}:
+    get:
+      tags:
+        - Holiday
+      summary: Get HolidayType by id
+      description: Get HolidayType by id. only the super admin or admin and the user account
+      operationId: getHolidayTypeById
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      parameters:
+        - name: holidayTypeId
+          in: path
+          description: holiday ID to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidayTypeDTO'
+    put:
+      tags:
+        - Holiday
+      summary: update a HolidayType
+      description: update a HolidayType
+      operationId: updateHolidayType
+      security:
+        - oAuth:
+            - EMPLOYEE
+      parameters:
+        - name: holidayTypeId
+          in: path
+          description: holidayType ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: holidayType object that need to be update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidayTypeDTO'
+      responses:
+        201:
+          description: successful operation
+    delete:
+      tags:
+        - Holiday
+      summary: Delete holidayType by id
+      description: Delete holidayType by id
+      operationId: deleteHolidayTypeById
+      security:
+        - oAuth:
+            - SUPER_ADMIN,ADMIN
+      parameters:
+        - name: holidayTypeId
+          in: path
+          description: The id of the holidayType to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: successful operation
 
 components:
   securitySchemes:
@@ -182,12 +496,12 @@ components:
       description: This API uses OAuth 2 with the Authorization Code grant flow.
       flows:
         authorizationCode:
-          authorizationUrl: http://localhost:8080/api/leavemanager/v1/api/auth/authenticate
-          tokenUrl: http://localhost:8080/api/leavemanager/v1/api/auth/authenticate
+          authorizationUrl: https://auth.oauth.leavemanager.cm
+          tokenUrl: https://token.oauth.leavemanager.cm
           scopes:
-            SUPER_ADMIN: all about super admin
-            ADMIN: all about admin
-            EMPLOYEE: all about employee
+            employee: all about employee
+            admin: all about admin
+            super-admin: all about super admin
 
   schemas:
     RegistrationDTO:
@@ -202,6 +516,32 @@ components:
         dateOfBirth:
           type: string
           format: date
+    CreationHolidayDTO:
+      type: object
+      properties:
+        title:
+          type: string
+          description: holiday title
+        type:
+          type: integer
+          format: int64
+          description: id of holiday type
+        description:
+          type: string
+        period:
+          $ref: '#/components/schemas/PeriodDTO'
+        dateOfBirth:
+          type: string
+          format: date
+    RegistrationResponseDTO:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          format: int64
+          description: created employee ID
+        accessToken:
+          type: string
     EmployeeDTO:
       type: object
       properties:
@@ -228,3 +568,49 @@ components:
         isActivated:
           type: boolean
           description: the value is 'true' if the employee insert an existing email
+    HolidayDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        type:
+          $ref: '#/components/schemas/HolidayTypeDTO'
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        period:
+          $ref: '#/components/schemas/PeriodDTO'
+        status:
+          $ref: '#/components/schemas/HolidayStatusDTO'
+    PeriodDTO:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+    HolidayStatusDTO:
+      type: string
+      enum:
+        - DRAFT
+        - PUBLISH
+        - APPROVED
+        - VALIDATED
+        - REFUSED
+    HolidayTypeDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string

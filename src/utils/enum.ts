@@ -1,5 +1,7 @@
 export enum THEME {
   BLUE = "BLUE",
+  GRAY = "GRAY",
+  BORDER_BLUE = "BORDER_BLUE",
 }
 
 export enum TABLE_ROW {
