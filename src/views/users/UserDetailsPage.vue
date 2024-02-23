@@ -20,7 +20,11 @@
         @click="shouldEditUser = true"
       />
     </section>
-    <section class="space-y-4 bg-white rounded-xl p-8 flex justify-between">
+    <InLoading v-if="isLoading" />
+    <section
+      v-else
+      class="space-y-4 bg-white rounded-xl p-8 flex justify-between"
+    >
       <section class="flex flex-col gap-y-7">
         <DetailItem :label="t('email')" :value="user?.email" />
         <DetailItem :label="t('first_name')" :value="user?.firstname" />
@@ -41,24 +45,35 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { THEME } from "@/utils/enum";
+import { useRouter } from "vue-router";
 import { onBeforeMount, ref } from "vue";
 import type { User } from "@/domain/user";
 import { useUserStore } from "@/stores/user";
 import EditUser from "@/components/EditUser.vue";
+import TwButton from "@/components/TwButton.vue";
+import InLoading from "@/components/InLoading.vue";
 import DetailItem from "@/components/DetailItem.vue";
 import UserIcon from "@/components/svg/UserIcon.vue";
-import TwButton from "@/components/TwButton.vue";
 
 const props = defineProps<{
-  userId: string;
+  userId?: string;
 }>();
 
 const user = ref<User>();
 const shouldEditUser = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
+const router = useRouter();
 const fetchUserDetails = async (): Promise<void> => {
   shouldEditUser.value = false;
-  user.value = await useUserStore().getEmployeeById(+props.userId);
+  isLoading.value = true;
+  if (props.userId) {
+    user.value = await useUserStore().getEmployeeById(+props.userId);
+    isLoading.value = false;
+  } else {
+    isLoading.value = false;
+    await router.push("/403");
+  }
 };
 
 onBeforeMount(async () => {

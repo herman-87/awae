@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: leaveManager Rest API
+  title: leavemanager Rest API
   description: All Item Rest API End Points
   version: 2024-W2
 servers:
@@ -10,6 +10,10 @@ tags:
     description: Everything about the Employees
   - name: Holiday
     description: Everything about the Holidays
+  - name: Admin
+    description: Everything about the Admin
+  - name: Authentication
+    description: All about the security
 paths:
   /admin/registration:
     post:
@@ -289,13 +293,13 @@ paths:
       responses:
         204:
           description: successful operation
-  /approve/{holidayId}:
+  /holiday/{holidayId}/notice:
     put:
       tags:
         - Holiday
-      summary: approve a Holiday
-      description: approve a Holiday
-      operationId: approveHoliday
+      summary: notice a Holiday
+      description: notice a Holiday
+      operationId: noticeHoliday
       security:
         - oAuth:
             - EMPLOYEE
@@ -307,30 +311,41 @@ paths:
           schema:
             type: integer
             format: int64
+      requestBody:
+        description: Holiday object that need to be notice
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoticeDTO'
       responses:
         201:
           description: successful operation
-  /unapproved/{holidayId}:
-    put:
+    get:
       tags:
         - Holiday
-      summary: unapproved a Holiday
-      description: unapproved a Holiday
-      operationId: unapprovedHoliday
+      summary: Get all notices by holiday
+      description: Get all notices by holiday
+      operationId: getNoticesByHoliday
       security:
         - oAuth:
-            - EMPLOYEE
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
       parameters:
         - name: holidayId
           in: path
-          description: holiday ID
+          description: holiday ID to get all notices
           required: true
           schema:
             type: integer
             format: int64
       responses:
-        201:
+        200:
           description: successful operation
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/NoticeDTO'
   /publish/{holidayId}:
     put:
       tags:
@@ -449,7 +464,7 @@ paths:
       operationId: updateHolidayType
       security:
         - oAuth:
-            - EMPLOYEE
+            - SUPER_ADMIN
       parameters:
         - name: holidayTypeId
           in: path
@@ -476,7 +491,7 @@ paths:
       operationId: deleteHolidayTypeById
       security:
         - oAuth:
-            - SUPER_ADMIN,ADMIN
+            - SUPER_ADMIN
       parameters:
         - name: holidayTypeId
           in: path
@@ -488,6 +503,137 @@ paths:
       responses:
         204:
           description: successful operation
+  /config/holiday:
+    post:
+      tags:
+        - HolidayConfig
+      summary: Create a HolidayConfig in the app
+      description: create a HolidayConfig
+      operationId: createHolidayConfig
+      security:
+        - oAuth:
+            - SUPER_ADMIN
+      requestBody:
+        description: object that need to be use for create HolidayConfig
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HolidayConfigDTO'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+    get:
+      tags:
+        - HolidayConfig
+      summary: get all HolidayConfigS
+      description: get all HolidayConfig present in the app
+      operationId: getAllHolidayConfigs
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HolidayConfigDTO'
+  /config/holiday/{holidayConfigId}:
+    get:
+      tags:
+        - HolidayConfig
+      summary: Get HolidayConfig by id
+      description: Get HolidayConfig by id. only the super admin or admin and the user account
+      operationId: getHolidayConfigById
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      parameters:
+        - name: holidayConfigId
+          in: path
+          description: HolidayConfig ID to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HolidayConfigDTO'
+  /config/holiday/{holidayConfigId}/activate:
+    put:
+      tags:
+        - HolidayConfig
+      summary: activate a HolidayConfig
+      description: activate a HolidayConfig
+      operationId: activateHolidayConfig
+      security:
+        - oAuth:
+            - SUPER_ADMIN
+      parameters:
+        - name: holidayConfigId
+          in: path
+          description: holiday config ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: successful operation
+  /config/holiday/{holidayConfigId}/deactivate:
+    put:
+      tags:
+        - HolidayConfig
+      summary: deactivate a HolidayConfig
+      description: deactivate a HolidayConfig
+      operationId: deactivateHolidayConfig
+      security:
+        - oAuth:
+            - SUPER_ADMIN
+      parameters:
+        - name: holidayConfigId
+          in: path
+          description: holiday config ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: successful operation
+  /auth/authenticate:
+    post:
+      tags:
+        - Authentication
+      summary: authenticate user
+      description: get access token after identified the user
+      operationId: authenticate
+      requestBody:
+        description: object that need to be use for create HolidayConfig
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequestDTO'
+      responses:
+        201:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDTO'
 
 components:
   securitySchemes:
@@ -604,6 +750,8 @@ components:
         - APPROVED
         - VALIDATED
         - REFUSED
+        - IN_PROGRESS
+        - PASSED
     HolidayTypeDTO:
       type: object
       properties:
@@ -612,5 +760,58 @@ components:
           format: int64
         name:
           type: string
+        description:
+          type: string
+    HolidayConfigDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        description:
+          type: string
+        numberOfTime:
+          type: integer
+          description: number of times leave can be requested over a year
+        minimumOfDays:
+          type: integer
+          description: minimum duration of leave in days
+        maximumOfDays:
+          type: integer
+          description: maximal duration of leave in days
+        status:
+          $ref: '#/components/schemas/HolidayConfigStatusDTO'
+        holidayTypeId:
+          type: integer
+          format: int64
+          description: the identifier of holiday type concerning by this configuration
+    HolidayConfigStatusDTO:
+      type: string
+      enum:
+        - DRAFT
+        - APPLY
+        - CLOSED
+    NoticeStatusDTO:
+      type: string
+      enum:
+        - OK
+        - NOT_OK
+    AuthenticationRequestDTO:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    TokenDTO:
+      type: object
+      properties:
+        value:
+          type: string
+    NoticeDTO:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NoticeStatusDTO'
         description:
           type: string

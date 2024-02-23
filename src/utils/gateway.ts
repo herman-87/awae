@@ -2,25 +2,21 @@ import { OpenAPI as awaeOpenApi } from "@/services/awae";
 
 export const prepareApis = () => {
   awaeOpenApi.HEADERS = customHeaders;
-  awaeOpenApi.TOKEN = getPublicAccessToken;
+  awaeOpenApi.TOKEN = getAccessToken;
   awaeOpenApi.BASE = import.meta.env.VITE_REST_API_BASE_URL;
 };
 
-const getPublicAccessToken = async (): Promise<string> => {
-  const publicAccessToken: string = localStorage.getItem(
-    "apiAccessToken",
-  ) as string;
+const getAccessToken = async (): Promise<string> => {
+  const accessToken: string = localStorage.getItem("apiAccessToken") as string;
 
-  return publicAccessToken === null ? "" : publicAccessToken;
+  return accessToken === null ? "" : accessToken;
 };
 
 export const customHeaders = async (): Promise<Record<string, string>> => {
-  const publicAccessToken: string = localStorage.getItem(
-    "apiAccessToken",
-  ) as string;
+  const accessToken: string = localStorage.getItem("apiAccessToken") as string;
 
   return {
-    Authorization: `Bearer ${publicAccessToken === null ? "" : publicAccessToken}`,
+    Authorization: `Bearer ${accessToken === null ? "" : accessToken}`,
     "tenant-id": localStorage.getItem("tenant-id") as string,
   };
 };

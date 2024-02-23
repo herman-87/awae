@@ -8,6 +8,7 @@ import App from "./App.vue";
 import router from "./router";
 import { createI18n } from "vue-i18n";
 import { prepareApis } from "@/utils/gateway";
+import { useSessionStore } from "@/stores/session";
 
 const i18n = createI18n({
   locale: navigator.language.split("-")[0],
@@ -24,3 +25,30 @@ app.use(i18n);
 app.use(router);
 
 app.mount("#app");
+
+const sessionStore = useSessionStore();
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStore.token;
+
+  if (
+    to.meta.isPublic ||
+    (token?.isLoggedIn && token.hasRoleToAccess(to.meta?.allowedRoles))
+  ) {
+    next();
+  } else {
+    localStorage.setItem("safeRoute", from.path);
+    next("/403");
+  }
+
+  // if (to.meta.isPublic) {
+  //   next();
+  // } else {
+  //   if (token?.isLoggedIn) {
+  //     if (token.hasRoleToAccess(to.meta.allowedRoles)) next();
+  //     else next("/403");
+  //   } else {
+  //     next("/");
+  //   }
+  // }
+});

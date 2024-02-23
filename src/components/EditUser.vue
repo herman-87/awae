@@ -39,6 +39,7 @@
             @click="editUser"
             :disabled="!hasSomeChanges"
             :theme="hasSomeChanges ? THEME.BLUE : THEME.GRAY"
+            :isLoading="isLoading"
           />
         </div>
       </section>
@@ -66,6 +67,8 @@ const emit = defineEmits<{
   (e: "close"): void;
   (e: "refresh"): void;
 }>();
+
+const isLoading = ref<boolean>(false);
 
 const close = (): void => {
   emit("close");
@@ -105,6 +108,7 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, userEdit, { $externalResults });
 
 const editUser = async (): Promise<void> => {
+  isLoading.value = true;
   const isFormReady = await v$.value.$validate();
   if (isFormReady) {
     const payload = new User(userEdit);
@@ -112,6 +116,7 @@ const editUser = async (): Promise<void> => {
     await userStore.updateUser(payload);
     emit("refresh");
   }
+  isLoading.value = false;
 };
 
 const { t } = useI18n({
