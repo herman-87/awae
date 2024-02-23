@@ -82,6 +82,7 @@ import TwButton from "@/components/TwButton.vue";
 import TextField from "@/components/TextField.vue";
 import PasswordField from "@/components/PasswordField.vue";
 import { useRouter } from "vue-router";
+import { useSessionStore } from "@/stores/session";
 
 type State = {
   email: string;
@@ -110,7 +111,7 @@ const router = useRouter();
 const performAuthentication = async (): Promise<void> => {
   const isFormReady = await v$.value.$validate();
   if (isFormReady) {
-    console.log("data ->", state);
+    await useSessionStore().login(state);
     await router.push("/users");
   }
 };

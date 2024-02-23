@@ -13,7 +13,8 @@
         @click="shouldDisplayAddUserModal = true"
       />
     </section>
-    <section class="bg-white p-4 border rounded-md">
+    <InLoading v-if="isLoading" />
+    <section v-else class="bg-white p-4 border rounded-md">
       <table class="w-full flex flex-col">
         <thead>
           <tr class="grid grid-cols-4 border-dashed border-b-[1.5px] pt-0 p-4">
@@ -49,11 +50,13 @@ import AddUser from "@/components/AddUser.vue";
 import { TABLE_ROW, THEME } from "@/utils/enum";
 import TwButton from "@/components/TwButton.vue";
 import { onBeforeMount, reactive, ref } from "vue";
+import InLoading from "@/components/InLoading.vue";
 
 const userStore = useUserStore();
 const columns = Object.keys(TABLE_ROW);
 
 const shouldDisplayAddUserModal = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 const router = useRouter();
 const goToUserDetailsPage = async (userId: string): Promise<void> => {
@@ -69,8 +72,10 @@ const state = reactive<State>({
 });
 
 const fetchAllUsers = async (): Promise<void> => {
+  isLoading.value = true;
   shouldDisplayAddUserModal.value = false;
   state.rows = await userStore.getAllEmployees();
+  isLoading.value = false;
 };
 
 onBeforeMount(async () => {

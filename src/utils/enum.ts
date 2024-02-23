@@ -10,3 +10,9 @@ export enum TABLE_ROW {
   LAST_NAME = "LAST_NAME",
   DATE_OF_BIRTH = "DATE_OF_BIRTH",
 }
+
+export enum ROLE {
+  "ADMIN" = "ADMIN",
+  "EMPLOYEE" = "EMPLOYEE",
+  "SUPER_ADMIN" = "SUPER_ADMIN",
+}

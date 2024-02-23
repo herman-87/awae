@@ -2,11 +2,27 @@ import { users } from "../../utils";
 
 describe("Employees list", () => {
   const baseUrl = "http://localhost:8080/api/leavemanager/v1/";
+  const token =
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcl9hZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MDg1MDc3OTgsImV4cCI6MTcwODUwOTIzOCwiU2NvcGVzIjoiU1VQRVJfQURNSU4ifQ.FwnIigZbSFL66xHgBh8VJ4AXg8ccocFGVSrwEUEYj4g";
 
   it("should render correctly", () => {
     cy.visit("/");
     cy.get("[data-test='emailField']").last().type("wilfriedhanga5@gmail.com");
     cy.get("[data-test='passwordField']").last().type("@@DEUXmille2000");
+
+    cy.intercept(
+      {
+        url: baseUrl + "auth/authenticate",
+        method: "POST",
+      },
+      {
+        statusCode: 201,
+        body: {
+          value: token,
+        },
+      },
+    );
+
     cy.intercept(
       {
         url: baseUrl + "admin/employee/all",

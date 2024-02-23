@@ -41,7 +41,12 @@
             :cta="t('cancel')"
             :theme="THEME.BORDER_BLUE"
           />
-          <TwButton @click="createUser" :cta="t('save')" :theme="THEME.BLUE" />
+          <TwButton
+            @click="createUser"
+            :isLoading="isLoading"
+            :cta="t('save')"
+            :theme="THEME.BLUE"
+          />
         </div>
       </section>
     </section>
@@ -72,6 +77,8 @@ const close = (): void => {
   emit("close");
 };
 
+const isLoading = ref<boolean>(false);
+
 const user = reactive({
   firstname: "",
   lastname: "",
@@ -96,6 +103,7 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, user, { $externalResults });
 
 const createUser = async (): Promise<void> => {
+  isLoading.value = true;
   const isFormReady = await v$.value.$validate();
   if (isFormReady) {
     const payload = new User(user);
@@ -104,6 +112,7 @@ const createUser = async (): Promise<void> => {
       : await userStore.createEmployee(payload);
     emit("refresh");
   }
+  isLoading.value = false;
 };
 
 const { t } = useI18n({
