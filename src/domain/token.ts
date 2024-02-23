@@ -15,7 +15,7 @@ export class Token {
   }
 
   get role(): ROLE {
-    return ROLE[this.decode.Scopes.toUpperCase() as keyof typeof ROLE];
+    return ROLE[this.decode.scopes.toUpperCase() as keyof typeof ROLE];
   }
 
   get isAdmin(): boolean {
@@ -36,6 +36,14 @@ export class Token {
     }
     return true;
   }
+
+  get avatar(): string {
+    const emailDomain = this.decode.sub;
+    const [email, domain] = emailDomain.split("@");
+    console.log(domain);
+    const word = email.split("");
+    return `${word[0]}${word.pop()}`.toUpperCase();
+  }
 }
 
-export type Payload = { sub: string; iat: number; exp: number; Scopes: string };
+export type Payload = { sub: string; iat: number; exp: number; scopes: string };

@@ -53,6 +53,7 @@
               :theme="THEME.BLUE"
               :cta="t('signin')"
               @click="performAuthentication"
+              :isLoading="isLoading"
             />
           </div>
         </div>
@@ -108,12 +109,17 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, state, { $externalResults });
 
 const router = useRouter();
+
+const isLoading = ref<boolean>(false);
+
 const performAuthentication = async (): Promise<void> => {
+  isLoading.value = true;
   const isFormReady = await v$.value.$validate();
   if (isFormReady) {
     await useSessionStore().login(state);
     await router.push("/users");
   }
+  isLoading.value = false;
 };
 
 const { t } = useI18n({

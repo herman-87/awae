@@ -1,7 +1,7 @@
 <template>
   <button
     :data-test="cta"
-    :disabled="disabled"
+    :disabled="disabled || isLoading"
     :class="[
       'font-bold outline-none flex justify-center items-center rounded min-w-24',
       theme.toLowerCase(),
@@ -27,7 +27,7 @@ defineProps<{
 }
 
 .border_blue {
-  @apply border border-blue-500 text-blue-500 p-2;
+  @apply border border-gray-300 text-black p-2;
 }
 
 .gray {

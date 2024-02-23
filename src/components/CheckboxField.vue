@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center text-blue-500">
+  <div class="flex justify-between items-center text-black font-bold">
     <label :data-test="label" :for="label">
       {{ label }}
     </label>
