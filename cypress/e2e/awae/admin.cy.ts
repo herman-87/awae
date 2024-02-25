@@ -1,9 +1,9 @@
 import { users } from "../../utils";
 
-describe("Employees list", () => {
+describe("Login as user with role admin", () => {
   const baseUrl = "http://localhost:8080/api/leavemanager/v1/";
   const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcl9hZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MDg1MDc3OTgsImV4cCI6MTcwODUwOTIzOCwiU2NvcGVzIjoiU1VQRVJfQURNSU4ifQ.FwnIigZbSFL66xHgBh8VJ4AXg8ccocFGVSrwEUEYj4g";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOiJBRE1JTiIsInN1YiI6ImVzc291bmdvdS55YW5uaWNrMUBsZWF2ZW1hbmFnZXIuY29tIiwiaWF0IjoxNzA4NzY4MDI2LCJleHAiOjE3MDg3Njk0NjZ9.L-DOlvB2BnpRNK1rETq41gBmK1b2hgz3duxI2NGxPdg";
 
   it("should render correctly", () => {
     cy.visit("/");

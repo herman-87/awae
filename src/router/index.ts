@@ -6,6 +6,7 @@ declare module "vue-router" {
   interface RouteMeta {
     isPublic?: boolean;
     allowedRoles?: string[];
+    tag?: string;
   }
 }
 
@@ -24,21 +25,37 @@ const router = createRouter({
       path: "/users",
       name: "dashboard",
       component: () => import("@/views/layout/EntryPage.vue"),
-      meta: {
-        isPublic: false,
-        allowedRoles: [ROLE.ADMIN, ROLE.SUPER_ADMIN],
-      },
       children: [
         {
           path: "",
           name: "users page",
           component: () => import("@/views/users/UsersListPage.vue"),
+          meta: {
+            isPublic: false,
+            allowedRoles: [ROLE.ADMIN, ROLE.SUPER_ADMIN],
+            tag: "user",
+          },
         },
         {
           path: "/users/:userId",
           name: "user details page",
           props: true,
           component: () => import("@/views/users/UserDetailsPage.vue"),
+          meta: {
+            isPublic: false,
+            allowedRoles: [ROLE.ADMIN, ROLE.SUPER_ADMIN],
+            tag: "user",
+          },
+        },
+        {
+          path: "/holidays",
+          name: "holidays page",
+          component: () => import("@/views/holidays/HolidaysListPage.vue"),
+          meta: {
+            isPublic: false,
+            allowedRoles: [ROLE.ADMIN, ROLE.SUPER_ADMIN, ROLE.EMPLOYEE],
+            tag: "holiday",
+          },
         },
       ],
     },

@@ -18,5 +18,6 @@ export default defineConfig({
       runMode: 5,
       openMode: 0,
     },
+    experimentalRunAllSpecs: true,
   },
 });

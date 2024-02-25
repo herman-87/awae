@@ -4,12 +4,7 @@
       <section
         class="font-semibold flex flex-col p-4 border-b border-dashed border-gray-200"
       >
-        <span
-          @click="close"
-          class="self-end text-sm text-white flex justify-center items-center cursor-pointer w-7 h-7 p-2 rounded-full bg-gray-400"
-        >
-          X
-        </span>
+        <CloseButton class="self-end" @click="close" />
         <div class="text-lg">{{ t("formTitle") }}</div>
       </section>
       <section class="p-7 space-y-4">
@@ -58,6 +53,7 @@ import { required } from "@vuelidate/validators";
 import TwButton from "@/components/TwButton.vue";
 import TextField from "@/components/TextField.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
+import CloseButton from "@/components/CloseButton.vue";
 
 const userStore = useUserStore();
 const props = defineProps<{

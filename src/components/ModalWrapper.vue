@@ -1,6 +1,6 @@
 <template>
   <section
-    class="fixed inset-0 backdrop-blur-md bg-gray-100/20 flex justify-center items-center z-30"
+    class="fixed inset-0 backdrop-blur bg-gray-950/50 flex justify-center items-center z-30"
   >
     <slot />
   </section>

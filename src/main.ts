@@ -37,18 +37,11 @@ router.beforeEach((to, from, next) => {
   ) {
     next();
   } else {
-    localStorage.setItem("safeRoute", from.path);
-    next("/403");
+    if (from.name === "auth" && token?.isEmployee) {
+      next("/holidays");
+    } else {
+      localStorage.setItem("safeRoute", from.path);
+      next("/403");
+    }
   }
-
-  // if (to.meta.isPublic) {
-  //   next();
-  // } else {
-  //   if (token?.isLoggedIn) {
-  //     if (token.hasRoleToAccess(to.meta.allowedRoles)) next();
-  //     else next("/403");
-  //   } else {
-  //     next("/");
-  //   }
-  // }
 });

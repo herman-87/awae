@@ -32,6 +32,10 @@ export class User {
     return this.toString(this.user.lastname);
   }
 
+  get fullName(): string {
+    return this.lastname + "" + this.firstname;
+  }
+
   get dateOfBirth(): string {
     return this.toString(this.user.dateOfBirth);
   }
