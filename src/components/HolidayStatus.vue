@@ -6,7 +6,7 @@ const { t } = useI18n({
   messages: {
     en: {
       draft: "Draft",
-      publish: "Publish",
+      publish: "Published",
       validated: "Validated",
       refused: "Refused",
       in_progress: "In progress",
@@ -14,7 +14,7 @@ const { t } = useI18n({
     },
     fr: {
       draft: "Brouillon",
-      publish: "Publier",
+      publish: "Publié",
       validated: "Validé",
       refused: "Refusé",
       in_progress: "En cours",
@@ -25,14 +25,16 @@ const { t } = useI18n({
 </script>
 
 <template>
-  <div :class="['rounded px-2 py-[3.25px] text-center', status.toLowerCase()]">
-    {{ t(status.toLowerCase()) }}
+  <div
+    :class="['rounded px-2 py-0.5 text-xs text-center', status?.toLowerCase()]"
+  >
+    {{ t(status?.toLowerCase()) }}
   </div>
 </template>
 
 <style scoped>
 .draft {
-  @apply bg-gray-50 border border-gray-500 text-gray-500;
+  @apply bg-orange-50 border border-orange-500 text-orange-500;
 }
 
 .publish {
@@ -52,6 +54,6 @@ const { t } = useI18n({
 }
 
 .passed {
-  @apply bg-yellow-50 border border-yellow-400 text-yellow-600;
+  @apply bg-cyan-50 border border-cyan-600 text-cyan-700;
 }
 </style>

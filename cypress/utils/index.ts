@@ -170,11 +170,28 @@ export const holidays = [
     createdBy: {
       lastname: "Patricia Lebsack",
       firstname: "Karianne",
-      email: "Julianne.OConner@kory.org",
+      email: "essoungou.yannick2@leavemanager.com",
     },
     period: {
       endDate: "2024-8-16T14:31:57.960Z",
       startDate: "2013-02-16T14:31:57.960Z",
+    },
+  },
+  {
+    id: "1",
+    type: {
+      name: "Vacation Leave",
+    },
+    createdAt: "2023-02-16T14:31:57.960Z",
+    status: "DRAFT",
+    createdBy: {
+      lastname: "Kurtis Weissnat",
+      firstname: "Elwyn.Skiles",
+      email: "essoungou.yannick2@leavemanager.com",
+    },
+    period: {
+      endDate: "2024-02-16T14:31:57.960Z",
+      startDate: "2020-02-16T14:31:57.960Z",
     },
   },
 ];

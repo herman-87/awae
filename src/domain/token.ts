@@ -3,19 +3,34 @@ import { jwtDecode } from "jwt-decode";
 import type { TokenDTO } from "@/services/awae";
 
 export class Token {
-  isLoggedIn: boolean;
-  private readonly decode: Payload;
+  isNull: boolean;
   constructor(private token: TokenDTO) {
-    this.decode = jwtDecode<Payload>(this.token.value || "");
-    this.isLoggedIn = true;
+    this.isNull = false;
+  }
+
+  get decode(): Payload {
+    const token = localStorage.getItem("apiAccessToken") || "";
+    return jwtDecode<Payload>(this.token.value || token);
   }
 
   get accessToken(): string {
     return this.token.value || "";
   }
 
+  set accessToken(token: string) {
+    this.token.value = token;
+  }
+
+  get isLoggedIn(): boolean {
+    return !this.isNull || !!localStorage.getItem("apiAccessToken");
+  }
+
   get role(): ROLE {
     return ROLE[this.decode.scopes.toUpperCase() as keyof typeof ROLE];
+  }
+
+  get hasAccess(): boolean {
+    return this.isAdmin || this.isSuperAdmin;
   }
 
   get isAdmin(): boolean {
@@ -37,13 +52,21 @@ export class Token {
     return true;
   }
 
+  get email(): string {
+    console.log(this.decode.sub);
+    return this.decode.sub;
+  }
+
   get avatar(): string {
-    const emailDomain = this.decode.sub;
-    const [email, domain] = emailDomain.split("@");
-    console.log(domain);
-    const word = email.split("");
+    const word = this.email.split("@")[0].split("");
     return `${word[0]}${word.pop()}`.toUpperCase();
   }
 }
 
 export type Payload = { sub: string; iat: number; exp: number; scopes: string };
+
+export const NullableToken = (): Token => {
+  const token = new Token({});
+  token.isNull = true;
+  return token;
+};

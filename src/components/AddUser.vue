@@ -23,7 +23,7 @@
           placeholder=""
           v-model="user.dateOfBirth"
         />
-        <div class="py-4">
+        <div class="py-4" v-if="sessionStore.token.isSuperAdmin">
           <CheckboxField
             :label="t('setAdmin')"
             :isChecked="user.isAdmin"
@@ -61,8 +61,10 @@ import ModalWrapper from "@/components/ModalWrapper.vue";
 import { useUserStore } from "@/stores/user";
 import { User } from "@/domain/user";
 import CloseButton from "@/components/CloseButton.vue";
+import { useSessionStore } from "@/stores/session";
 
 const userStore = useUserStore();
+const sessionStore = useSessionStore();
 
 const emit = defineEmits<{
   (e: "close"): void;
