@@ -21,7 +21,7 @@
             :data-test="t('incoming')"
             @click="shouldDisplayOnlyICreated = false"
             :class="[
-              'min-w-16 text-sm text-center transition duration-500 ease-in px-4 py-2 font-bold cursor-pointer',
+              'rounded-t min-w-16 text-sm text-center transition duration-500 ease-in px-4 py-2 font-bold cursor-pointer',
               shouldDisplayOnlyICreated
                 ? 'text-gray-500'
                 : 'text-blue-600 border-b-2 bg-blue-50 border-blue-600',
@@ -30,10 +30,11 @@
             {{ t("incoming") }}
           </span>
           <span
+            v-if="!session.token.isSuperAdmin"
             :data-test="t('private')"
             @click="shouldDisplayOnlyICreated = true"
             :class="[
-              'min-w-16 text-sm text-center transition duration-500 ease-in px-4 py-2 font-bold cursor-pointer',
+              'rounded-t min-w-16 text-sm text-center transition duration-500 ease-in px-4 py-2 font-bold cursor-pointer',
               shouldDisplayOnlyICreated
                 ? 'text-blue-600 border-b-2 bg-blue-50 border-blue-600'
                 : 'text-gray-500',

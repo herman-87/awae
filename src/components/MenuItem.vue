@@ -26,11 +26,13 @@ const { t } = useI18n({
       user: "User",
       holiday: "Holiday",
       employee: "Employee",
+      settings: "Settings",
     },
     fr: {
       holiday: "Congé",
       user: "Utilisateur",
       employee: "Employer",
+      settings: "Configurations",
     },
   },
 });
@@ -38,16 +40,17 @@ const { t } = useI18n({
 
 <template>
   <div
+    :data-test="t(link.label)"
     @click="goTo(link.path)"
     :class="[
       'font-bold transition duration-75 cursor-pointer flex text-sm items-center space-x-1 p-2',
-      isCurrentRoute ? 'rounded-md bg-blue-100 text-blue-700' : 'text-gray-300',
+      isCurrentRoute ? 'rounded-md bg-blue-100 text-blue-700' : 'text-gray-400',
     ]"
   >
     <span
       :class="[
         'shrink-0 w-4 h-4 rounded-full bg-white border-[3px]',
-        isCurrentRoute ? 'border-blue-700 ' : 'border-gray-300',
+        isCurrentRoute ? 'border-blue-700 ' : 'border-gray-400',
       ]"
     ></span>
     <span>{{ t(link.label) }}</span>

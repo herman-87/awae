@@ -221,25 +221,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HolidayDTO'
-  /my-holiday:
-    get:
-      tags:
-        - Holiday
-      summary: get my Holidays
-      description: get my Holidays present in the app
-      operationId: getMyHolidays
-      security:
-        - oAuth:
-            - EMPLOYEE,SUPER_ADMIN,ADMIN
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HolidayDTO'
   /holiday/{holidayId}:
     get:
       tags:
@@ -407,7 +388,7 @@ paths:
       responses:
         201:
           description: successful operation
-  /approved/{holidayId}:
+  /validate/{holidayId}:
     put:
       tags:
         - Holiday
@@ -646,6 +627,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HolidayConfigDTO'
+  /config/holiday/{holidayTypeId}:
+    get:
+      tags:
+        - HolidayConfig
+      summary: Get HolidayConfig by id
+      description: Get HolidayConfig by holiday type id
+      operationId: getAllHolidayConfigByHolidayType
+      security:
+        - oAuth:
+            - SUPER_ADMIN
+      parameters:
+        - name: holidayTypeId
+          in: path
+          description: HolidayConfig ID to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HolidayConfigDTO'
   /config/holiday/{holidayConfigId}/activate:
     put:
       tags:
@@ -709,6 +717,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenDTO'
+  /holiday/my-holidays:
+    get:
+      tags:
+        - Holiday
+      summary: get all my Holidays
+      description: get all my Holidays
+      operationId: getAllMyHolidays
+      security:
+        - oAuth:
+            - EMPLOYEE,SUPER_ADMIN,ADMIN
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HolidayDTO'
 components:
   securitySchemes:
     oAuth:

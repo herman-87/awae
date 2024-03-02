@@ -53,7 +53,6 @@ export class Token {
   }
 
   get email(): string {
-    console.log(this.decode.sub);
     return this.decode.sub;
   }
 

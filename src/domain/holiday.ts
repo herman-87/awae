@@ -1,6 +1,7 @@
 import { HOLIDAY_STATUS } from "@/utils/enum";
 import { NullableUser, User } from "@/domain/user";
-import type { HolidayDTO, HolidayTypeDTO, PeriodDTO } from "@/services/awae";
+import type { HolidayDTO, PeriodDTO } from "@/services/awae";
+import { HolidayType, NullableHolidayType } from "@/domain/config";
 
 const getStringFrom = (data?: string | number): string => {
   return data?.toString() || "";
@@ -89,36 +90,10 @@ export class Period {
   }
 }
 
-export class HolidayType {
-  isNull: boolean;
-
-  constructor(private type: HolidayTypeDTO) {
-    this.isNull = false;
-  }
-
-  get id(): string {
-    return getStringFrom(this.type.id);
-  }
-
-  get name(): string {
-    return getStringFrom(this.type.name);
-  }
-
-  get description(): string {
-    return getStringFrom(this.type.description);
-  }
-}
-
 export const NullablePeriod = (): Period => {
   const period = new Period({});
   period.isNull = true;
   return period;
-};
-
-export const NullableHolidayType = (): HolidayType => {
-  const type = new HolidayType({});
-  type.isNull = true;
-  return type;
 };
 
 export const NullableHoliday = (): Holiday => {
