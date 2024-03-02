@@ -1,6 +1,10 @@
 export enum THEME {
   BLUE = "BLUE",
   GRAY = "GRAY",
+  DARK_GRAY = "DARK_GRAY",
+  LIGHT_BLUE = "LIGHT_BLUE",
+  GREEN = "GREEN",
+  RED = "RED",
   BORDER_BLUE = "BORDER_BLUE",
 }
 

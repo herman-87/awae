@@ -1,5 +1,5 @@
 import { HOLIDAY_STATUS } from "@/utils/enum";
-import { User, NullableUser } from "@/domain/user";
+import { NullableUser, User } from "@/domain/user";
 import type { HolidayDTO, HolidayTypeDTO, PeriodDTO } from "@/services/awae";
 
 const getStringFrom = (data?: string | number): string => {
@@ -33,6 +33,19 @@ export class Holiday {
       return HOLIDAY_STATUS[this.holiday.status as keyof typeof HOLIDAY_STATUS];
     }
     return HOLIDAY_STATUS.DRAFT;
+  }
+
+  get isDraft(): boolean {
+    return this.status === HOLIDAY_STATUS.DRAFT;
+  }
+
+  get isClose(): boolean {
+    return (
+      this.status === HOLIDAY_STATUS.REFUSED ||
+      this.status === HOLIDAY_STATUS.VALIDATED ||
+      this.status === HOLIDAY_STATUS.PASSED ||
+      this.status === HOLIDAY_STATUS.IN_PROGRESS
+    );
   }
 
   get validity(): Period {

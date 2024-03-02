@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { AuthenticationService } from "@/services/awae";
-import { Token } from "@/domain/token";
+import { NullableToken, Token } from "@/domain/token";
 
 export const useSessionStore = defineStore("session", () => {
-  const token = ref<Token | undefined>(undefined);
+  const token = ref<Token>(NullableToken());
 
   type Credential = {
     password: string;
