@@ -195,3 +195,63 @@ export const holidays = [
     },
   },
 ];
+
+export const holidaysTypes = [
+  {
+    id: 1,
+    name: "Congé Annuel (Vacation Leave)",
+    description:
+      "Temps libre accordé aux employés pour prendre des vacances et se reposer.",
+  },
+  {
+    id: 2,
+    name: "Congé de Maladie (Sick Leave)",
+    description:
+      "Autorisation d'absence pour des raisons de santé, généralement avec maintien partiel ou total du salaire.",
+  },
+  {
+    id: 3,
+    name: "Congé Personnel (Personal Leave)",
+    description:
+      "Congé utilisé pour des engagements personnels tels que des rendez-vous médicaux, des affaires familiales, etc.",
+  },
+  {
+    id: 4,
+    name: "Congé de Maternité (Maternity Leave)",
+    description:
+      "Temps accordé aux femmes enceintes avant et après l'accouchement.",
+  },
+  {
+    id: 5,
+    name: "Congé de Paternité (Paternity Leave)",
+    description:
+      "Temps alloué aux nouveaux pères pour soutenir leur partenaire lors de la naissance d'un enfant.",
+  },
+];
+
+export const configs = [
+  {
+    id: 3,
+    numberOfTime: 6,
+    minimumOfDays: 1,
+    maximumOfDays: 1,
+    description: "Temps alloué aux nouveaux pères",
+    status: "APPLY",
+  },
+  {
+    id: 4,
+    numberOfTime: 48,
+    minimumOfDays: 1,
+    maximumOfDays: 2,
+    description: "Temps alloué aux nouveaux pères",
+    status: "DRAFT",
+  },
+  {
+    id: 5,
+    numberOfTime: 144,
+    minimumOfDays: 2,
+    maximumOfDays: 6,
+    description: "Temps alloué aux nouveaux pères",
+    status: "CLOSED",
+  },
+];

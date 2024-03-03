@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { holidays, users } from "./index";
+import { configs, holidays, holidaysTypes, users } from "./index";
 
 export enum ROLE {
   ADMIN = "admin",
@@ -161,6 +161,45 @@ export const utilsMocks = () => {
     ).as("myHolidays");
   };
 
+  const stubHolidaysTypes = () => {
+    cy.intercept(
+      {
+        url: baseUrl + "holiday/type",
+        method: "GET",
+      },
+      {
+        statusCode: 200,
+        body: holidaysTypes,
+      },
+    );
+  };
+
+  const stubHolidayTypeById = () => {
+    cy.intercept(
+      {
+        url: baseUrl + "holiday/type/1",
+        method: "GET",
+      },
+      {
+        statusCode: 200,
+        body: holidaysTypes[0],
+      },
+    );
+  };
+
+  const stubConfigsByHolidayTypeById = () => {
+    cy.intercept(
+      {
+        url: baseUrl + "config/holiday/1",
+        method: "GET",
+      },
+      {
+        statusCode: 200,
+        body: configs,
+      },
+    );
+  };
+
   return {
     stubLogin,
     stubMyHolidays,
@@ -171,7 +210,10 @@ export const utilsMocks = () => {
     stubHolidayDetails,
     stubAllHolidaysList,
     stubEmployeeDetails,
+    stubHolidaysTypes,
     fillEmployeeData,
     stubAdminAdd,
+    stubConfigsByHolidayTypeById,
+    stubHolidayTypeById,
   };
 };

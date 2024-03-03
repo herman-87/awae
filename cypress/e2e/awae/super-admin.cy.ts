@@ -8,6 +8,9 @@ const {
   stubEmployeeList,
   fillEmployeeData,
   stubEmployeeDetails,
+  stubHolidaysTypes,
+  stubConfigsByHolidayTypeById,
+  stubHolidayTypeById,
 } = utilsMocks();
 
 describe("Login as user with role super-admin", () => {
@@ -19,5 +22,10 @@ describe("Login as user with role super-admin", () => {
     stubEmployeeEdit();
     stubEmployeeDetails();
     fillEmployeeData(ROLE.SUPER_ADMIN);
+    stubHolidaysTypes();
+    stubConfigsByHolidayTypeById();
+    stubHolidayTypeById();
+    cy.get("[data-test='Settings']").click();
+    cy.get("[data-test='holidayType-1']").click();
   });
 });

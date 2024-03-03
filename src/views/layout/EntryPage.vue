@@ -6,7 +6,7 @@
     >
       <h2 class="--awae-text-stroke">AWAE</h2>
       <div
-        class="w-10 h-10 rounded-full p-2 flex items-center justify-center text-white font-bold bg-gradient-to-bl from-blue-200 from-5% to-blue-500 to-65%"
+        class="w-10 h-10 rounded-full p-2 flex items-center justify-center text-white font-bold bg-gradient-to-bl from-blue-600 from-5% to-blue-700 to-65%"
       >
         {{ initials }}
       </div>

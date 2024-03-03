@@ -57,6 +57,27 @@ const router = createRouter({
             tag: "holiday",
           },
         },
+        {
+          path: "/settings",
+          name: "settings page",
+          component: () => import("@/views/settings/SettingsList.vue"),
+          meta: {
+            isPublic: false,
+            allowedRoles: [ROLE.SUPER_ADMIN],
+            tag: "settings",
+          },
+        },
+        {
+          path: "/settings/:id",
+          props: true,
+          name: "setting details page",
+          component: () => import("@/views/settings/SettingsDetails.vue"),
+          meta: {
+            isPublic: false,
+            allowedRoles: [ROLE.SUPER_ADMIN],
+            tag: "settings",
+          },
+        },
       ],
     },
     {

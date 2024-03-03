@@ -5,6 +5,7 @@ import { THEME } from "@/utils/enum";
 import { NullableReason, Reason } from "@/domain/reason";
 import TwButton from "@/components/TwButton.vue";
 import CloseButton from "@/components/CloseButton.vue";
+import TextareaField from "@/components/TextareaField.vue";
 
 defineEmits<{
   (e: "close"): void;
@@ -53,13 +54,12 @@ const initAction = async (): Promise<void> => {
     <div class="flex p-2">
       <CloseButton @click="$emit('close')" />
     </div>
-    <div class="flex flex-col gap-2 px-2 py-7" v-if="canTextReason">
-      <label for="reason">{{ t("reason") }} </label>
-      <textarea
-        class="resize-none h-20 rounded-md focus:border-blue-400 outline-none p-2 border border-gray-200"
-        v-model="message"
-      ></textarea>
-    </div>
+    <TextareaField
+      class="px-2 py-7"
+      v-model="message"
+      :label="t('reason')"
+      v-if="canTextReason"
+    />
     <div class="!text-sm px-4 py-6 flex justify-between items-end">
       <span class="font-bold w-72">{{ t(action.toLowerCase()) }}</span>
       <TwButton
