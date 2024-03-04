@@ -16,7 +16,7 @@ export const useHolidayStore = defineStore("holiday", () => {
 
   const getMyHolidays = async (): Promise<Holiday[]> => {
     try {
-      const holidays = await HolidayService.getMyHolidays();
+      const holidays = await HolidayService.getAllMyHolidays();
       return holidays.map((holiday) => new Holiday(holiday));
     } catch (error) {
       console.log(error);

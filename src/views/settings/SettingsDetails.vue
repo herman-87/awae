@@ -12,6 +12,7 @@ import AddConfig from "@/components/AddConfig.vue";
 import TwButton from "@/components/TwButton.vue";
 import { THEME } from "@/utils/enum";
 import InLoading from "@/components/InLoading.vue";
+import { useRouter } from "vue-router";
 
 const configStore = useHolidayConfigStore();
 const holidayType = ref<HolidayType>(NullableHolidayType());
@@ -20,6 +21,11 @@ const holidayConfigs = ref<Grid[]>([]);
 const props = defineProps<{
   id?: number;
 }>();
+
+const router = useRouter();
+const goToConfigDetails = async (configId: number): Promise<void> => {
+  await router.push(`/settings/${props.id}/${configId}`);
+};
 
 const { t } = useI18n({
   messages: {
@@ -154,6 +160,8 @@ onBeforeMount(async () => {
               class="rounded transition ease-linear duration-75 hover:border-2 hover:border-blue-500 cursor-pointer grid items-center text-blue-800 font-extrabold border border-blue-100"
               v-for="config in holidayConfigs"
               :key="config.id"
+              @click="goToConfigDetails(config.id as number)"
+              :data-test="`config-${config.id}`"
             >
               <td class="px-2" v-for="column in headersColumns" :key="column">
                 <ConfigStatus
