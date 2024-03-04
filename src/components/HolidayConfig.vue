@@ -10,7 +10,7 @@
     {{ config.id }}
     {{ config.isApplied }}
     {{ config.isDraft }}
-    {{ config.isClose }}
+    {{ config.isClosed }}
   </section>
 
   <div>

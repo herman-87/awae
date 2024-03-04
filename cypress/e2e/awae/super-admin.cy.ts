@@ -11,6 +11,7 @@ const {
   stubHolidaysTypes,
   stubConfigsByHolidayTypeById,
   stubHolidayTypeById,
+  stubConfigById,
 } = utilsMocks();
 
 describe("Login as user with role super-admin", () => {
@@ -25,7 +26,9 @@ describe("Login as user with role super-admin", () => {
     stubHolidaysTypes();
     stubConfigsByHolidayTypeById();
     stubHolidayTypeById();
+    stubConfigById();
     cy.get("[data-test='Settings']").click();
     cy.get("[data-test='holidayType-1']").click();
+    cy.get("[data-test='config-3']").click();
   });
 });

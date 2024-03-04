@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-defineProps<{ status: string }>();
+defineProps<{
+  status: string;
+  isDetailMode?: boolean;
+}>();
 const { t } = useI18n({
   messages: {
     en: {
@@ -21,11 +24,15 @@ const { t } = useI18n({
 <template>
   <div
     :class="[
-      'items-center flex gap-1 text-xs',
-      `${status?.toLowerCase()}_text`,
+      isDetailMode
+        ? `items-center flex gap-1 text-xs ${status?.toLowerCase()}_text ${status?.toLowerCase()}_border`
+        : `items-center flex gap-1 text-xs ${status?.toLowerCase()}_text`,
     ]"
   >
-    <span :class="`${status?.toLowerCase()}_circle`"></span>
+    <span
+      v-if="!isDetailMode"
+      :class="`${status?.toLowerCase()}_circle`"
+    ></span>
     <span>{{ t(status?.toLowerCase()) }}</span>
   </div>
 </template>
@@ -48,5 +55,17 @@ const { t } = useI18n({
 }
 .draft_text {
   @apply text-gray-800 font-semibold;
+}
+
+.draft_border {
+  @apply border border-gray-800 rounded-md px-1.5;
+}
+
+.apply_border {
+  @apply border border-green-600 rounded-md px-1.5;
+}
+
+.close_border {
+  @apply border border-red-600 rounded-md px-1.5;
 }
 </style>

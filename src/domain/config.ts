@@ -66,7 +66,7 @@ export class HolidayConfig {
     return this.status === CONFIG_STATUS.APPLY;
   }
 
-  get isClose(): boolean {
+  get isClosed(): boolean {
     return this.status === CONFIG_STATUS.CLOSED;
   }
 

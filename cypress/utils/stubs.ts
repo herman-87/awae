@@ -151,7 +151,7 @@ export const utilsMocks = () => {
   const stubMyHolidays = () => {
     cy.intercept(
       {
-        url: baseUrl + "my-holiday",
+        url: baseUrl + "holiday/my-holidays",
         method: "GET",
       },
       {
@@ -200,6 +200,19 @@ export const utilsMocks = () => {
     );
   };
 
+  const stubConfigById = () => {
+    cy.intercept(
+      {
+        url: baseUrl + "config/holiday/3",
+        method: "GET",
+      },
+      {
+        statusCode: 200,
+        body: configs[0],
+      },
+    );
+  };
+
   return {
     stubLogin,
     stubMyHolidays,
@@ -215,5 +228,6 @@ export const utilsMocks = () => {
     stubAdminAdd,
     stubConfigsByHolidayTypeById,
     stubHolidayTypeById,
+    stubConfigById,
   };
 };

@@ -8,7 +8,10 @@
         />
       </div>
     </div>
-    <MenuItem :link="settings" />
+    <MenuItem
+      v-if="session.token?.hasRoleToAccess(settings.allowedRoles)"
+      :link="settings"
+    />
   </section>
 </template>
 
@@ -22,7 +25,7 @@ const settings = {
   tag: "settings",
   label: "settings",
   path: "/settings",
-  allowedRoles: [ROLE.SUPER_ADMIN],
+  allowedRoles: [ROLE.SUPER_ADMIN, ROLE.ADMIN],
 };
 
 const links = [
